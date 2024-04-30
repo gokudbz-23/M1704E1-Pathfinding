@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,30 +9,36 @@ public class GameManager : MonoBehaviour
     private int[] startPos = new int[2];
     private int[] objectivePos = new int[2];
     private List<Node> openSet;
-    private List<Node> closeSet;
-    class Node
+    private List<Node> closedSet;
+    class Node //se que seria recomendable hacer esto en otro .cs pero no tengo apenas ganas de vivir como para molestarme (estoy cansado jefe)
     {
         int[] position;
-        int cost;
+        float cost;
         bool walkable;
-        int heuristica;
+        float heuristica;
+        private int[] objectivePos;
 
-        public Node(int[] position, int cost, bool walkable)
+        public Node(int[] position, float cost, bool walkable, int[] objectivePos)
         {
             this.position = position;
             this.cost = cost;
             this.walkable = walkable;
+            this.cost = 0.2f;          
+            heuristica = Calculator.CheckDistanceToObj(position, objectivePos);
         }
-        public int calcHeuristica(Node node1, Node node2) 
-        {
-            int x = (node1.position[1] - node2.position[1]);
-            int y = (node1.position[0] - node2.position[0]);
-            return x + y;
-        }
-        public int checkAround() 
+        //public int calcHeuristica(Node node1, Node node2) 
+        //{
+        //    int x = (node1.position[1] - node2.position[1]);
+        //    int y = (node1.position[0] - node2.position[0]);
+        //    return x + y;
+        //}
+        public Node[] checkAround() 
         {
             for (int[] i = position; position[0] < position[0] + 1; i[0] = i[0]);
-            return 0;
+            for (int[] i = position; position[0] < position[0] + 1; i[0] = i[0]);
+            for (int[] i = position; position[0] < position[0] + 1; i[0] = i[0]);
+            for (int[] i = position; position[0] < position[0] + 1; i[0] = i[0]);
+            return //Lista nodos, meterla a lista abierta, comprobar valor mas pequeño y meter a la cerrada;
         }
     }
     private void Awake()
@@ -92,7 +97,7 @@ public class GameManager : MonoBehaviour
     {
         if(!EvaluateWin())
         {
-            openSet.Add(new Node(startPos, 0, false));
+            openSet.Add(new Node(startPos, 0, false, objectivePos));
             while(openSet.Count > 0) 
             {
                 
