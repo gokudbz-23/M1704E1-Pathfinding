@@ -187,7 +187,7 @@ public class GameManager : MonoBehaviour
         {
             // Instanciar un marcador en la posición del nodo
             GameObject pathMarker = Instantiate(token3, Calculator.GetPositionFromMatrix(path[i].position), Quaternion.identity);
-            GameObject finalMarker = Instantiate(token3, Calculator.GetPositionFromMatrix(path[path.Count - 1].position), Quaternion.identity);
         }
+        GameObject finalMarker = Instantiate(token3, Calculator.GetPositionFromMatrix(path[path.Count - 1].position), Quaternion.identity);
     }
 }
